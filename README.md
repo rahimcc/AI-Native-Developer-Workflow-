@@ -1,6 +1,8 @@
 # Household Chore Tracker
 
 A local web app for tracking shared household chores, assigned to household members, with support for recurring schedules.
+Visit https://ai-native-developer-workflow.onrender.com . Deployment could take few minutes.
+
 
 See [`_docs/plan.md`](_docs/plan.md) for the full spec and [`_docs/backlog.md`](_docs/backlog.md) for the build backlog.
 
