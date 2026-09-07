@@ -1,0 +1,12 @@
+{% extends "chores/base.html" %}
+
+{% block title %}Delete Chore{% endblock %}
+
+{% block content %}
+    <h1>Delete "{{ chore.title }}"?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm delete</button>
+        <a class="button" href="{% url 'chores:chore_list' %}">Cancel</a>
+    </form>
+{% endblock %}

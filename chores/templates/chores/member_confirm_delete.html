@@ -1,0 +1,15 @@
+{% extends "chores/base.html" %}
+
+{% block title %}Delete Member{% endblock %}
+
+{% block content %}
+    <h1>Delete "{{ member.name }}"?</h1>
+    {% if member.chores.exists %}
+        <p class="muted">This member is assigned to {{ member.chores.count }} chore(s). Those chores will become unassigned.</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm delete</button>
+        <a class="button" href="{% url 'chores:member_list' %}">Cancel</a>
+    </form>
+{% endblock %}

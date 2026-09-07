@@ -1,0 +1,50 @@
+{% extends "chores/base.html" %}
+
+{% block title %}Chores{% endblock %}
+
+{% block content %}
+    <h1>Chores</h1>
+    <a class="add-link" href="{% url 'chores:chore_add' %}">+ Add chore</a>
+
+    <form class="filters" method="get">
+        <label>
+            Member
+            <select name="member" onchange="this.form.submit()">
+                <option value="">All</option>
+                {% for member in members %}
+                    <option value="{{ member.pk }}" {% if selected_member == member.pk|stringformat:"s" %}selected{% endif %}>
+                        {{ member.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>
+            Sort by
+            <select name="sort" onchange="this.form.submit()">
+                <option value="due_date" {% if sort == "due_date" %}selected{% endif %}>Due date</option>
+                <option value="member" {% if sort == "member" %}selected{% endif %}>Member</option>
+            </select>
+        </label>
+    </form>
+
+    <ul>
+        {% for chore in chores %}
+            <li>
+                <strong>{{ chore.title }}</strong>
+                <span class="muted">
+                    due {{ chore.due_date }}
+                    · {{ chore.assigned_member.name|default:"Unassigned" }}
+                    {% if chore.recurrence_days %}· repeats every {{ chore.recurrence_days }} day{{ chore.recurrence_days|pluralize }}{% endif %}
+                </span>
+                <form method="post" action="{% url 'chores:chore_complete' chore.pk %}">
+                    {% csrf_token %}
+                    <button type="submit">Mark complete</button>
+                </form>
+                <a class="button" href="{% url 'chores:chore_edit' chore.pk %}">Edit</a>
+                <a class="button" href="{% url 'chores:chore_delete' chore.pk %}">Delete</a>
+            </li>
+        {% empty %}
+            <li class="muted">No chores yet — add one above.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

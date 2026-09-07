@@ -1,0 +1,19 @@
+{% extends "chores/base.html" %}
+
+{% block title %}Members{% endblock %}
+
+{% block content %}
+    <h1>Members</h1>
+    <a class="add-link" href="{% url 'chores:member_add' %}">+ Add member</a>
+    <ul>
+        {% for member in members %}
+            <li>
+                <strong>{{ member.name }}</strong>
+                <a class="button" href="{% url 'chores:member_edit' member.pk %}">Edit</a>
+                <a class="button" href="{% url 'chores:member_delete' member.pk %}">Delete</a>
+            </li>
+        {% empty %}
+            <li class="muted">No members yet — add one above.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
